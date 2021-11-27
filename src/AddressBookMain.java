@@ -1,16 +1,20 @@
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBookMain {
 
     ArrayList<Contact> contacts = new ArrayList<>();
+    Map<String,Contact> books= new LinkedHashMap<>();           //Creating Address book using map
 
     public static void menu() {
         System.out.println("Press 1 to Add the Contacts");
         System.out.println("Press 2 to Print Contacts");
         System.out.println("Press 3 to Edit Contacts");
-        System.out.println("Press 4 to exit");
+        System.out.println("Press 4 to delete Contacts");
+        System.out.println("Press 5 to exit");
     }
 
     public void printContacts() {
@@ -31,7 +35,6 @@ public class AddressBookMain {
         Scanner inp = new Scanner(System.in);
         int place = contactinBook(firstName);
         if (place >= 0) {
-
             System.out.println("Enter Last name");
             String lastName = inp.next();
             System.out.println("Enter Phone Number");
@@ -50,7 +53,8 @@ public class AddressBookMain {
             System.out.println("First Name Not Match");
         }
     }
-    private void deleteContact(String name) {
+    private void deleteContact(String name)
+    {
         int place =contactinBook(name);
         contacts.remove(place);
     }
@@ -60,9 +64,12 @@ public class AddressBookMain {
         AddressBookMain obj = new AddressBookMain();
         menu();
         int choice = inp.nextInt();
-        while (choice != 4) {
+        while (choice != 5) {
 
-            if (choice == 1) {
+            if (choice == 1)
+            {
+                System.out.println("Enter Book name : ");
+                String book = inp.next();
                 System.out.println("Enter First Name:");
                 String firstName = inp.next();
                 System.out.println("Enter Last NAme");
@@ -75,8 +82,9 @@ public class AddressBookMain {
                 String state = inp.next();
                 System.out.println("Enter the pin code");
                 String pinCode = inp.next();
-                obj.contacts.add(new Contact(firstName, lastName, number, city, state, pinCode));
-
+                Contact object=new Contact(firstName, lastName, number, city, state, pinCode);
+                obj.contacts.add(object);
+                obj.books.put(book,object);
             }
             else if (choice == 2)
             {
@@ -97,6 +105,4 @@ public class AddressBookMain {
             choice = inp.nextInt();
         }
     }
-
-
 }
