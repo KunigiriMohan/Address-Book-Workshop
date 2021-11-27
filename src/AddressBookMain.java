@@ -50,6 +50,10 @@ public class AddressBookMain {
             System.out.println("First Name Not Match");
         }
     }
+    private void deleteContact(String name) {
+        int place =contactinBook(name);
+        contacts.remove(place);
+    }
 
     public static void main(String[] args) {
         Scanner inp = new Scanner(System.in);
@@ -83,8 +87,16 @@ public class AddressBookMain {
                 String firstName = inp.next();
                 obj.editContacts(firstName);
             }
+            else if (choice ==4)
+            {
+                System.out.println("Enter First name of contact to delete");
+                String name = inp.next();
+                obj.deleteContact(name);
+            }
             menu();
             choice = inp.nextInt();
         }
     }
+
+
 }
