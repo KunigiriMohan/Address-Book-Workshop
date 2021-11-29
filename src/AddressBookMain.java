@@ -29,7 +29,8 @@ class AddressBookMain {
         System.out.println("Press 6 to view contact details by State");
         System.out.println("Press 7 to view contact count by State");
         System.out.println("Press 8 to view contact count by City");
-        System.out.println("Press 9 to Quit");
+        System.out.println("Press 9 to view list of contacts in sorted order");
+        System.out.println("Press 10 to Quit");
     }
 
     /*
@@ -39,7 +40,6 @@ class AddressBookMain {
         for (int i = 0; i < contacts.size(); i++)
             if (contacts.containsKey(s))
                 return i;
-
         return -1;
     }
 
@@ -63,6 +63,8 @@ class AddressBookMain {
             contacts.replace(firstName, new Contact(firstName, lastName, mobileNumber, city, state, pinCode));
             books.replace(firstName, new Contact(firstName, lastName, mobileNumber, city, state, pinCode));
             name.replace(firstName, new Contact(firstName, lastName, mobileNumber, city, state, pinCode));
+            cityName.replace(city, new Contact(firstName, lastName, mobileNumber, city, state, pinCode));
+            stateName.replace(state, new Contact(firstName, lastName, mobileNumber, city, state, pinCode));
         } else if (place == -1) {
             System.out.println("First Name Not Match");
         }
@@ -77,6 +79,9 @@ class AddressBookMain {
             contacts.remove(place);
             books.remove(place);
             name.remove(place);
+            cityName.remove(place);
+            stateName.remove(place);
+
         }
     }
 
@@ -111,20 +116,29 @@ class AddressBookMain {
         System.out.println("Enter Name of the City.");
         String nameCity = scanner.next();
 
-        if (obj.cityName.entrySet().stream().anyMatch(name -> name.getKey().equals(nameCity))) {
+        if (obj.cityName.entrySet().stream().anyMatch(name -> name.getKey().equals(nameCity)))
+        {
             obj.cityName.entrySet().stream().filter(name -> name.getKey().equals(nameCity)).forEach(System.out::println);
         } else {
             System.out.println("No Contacts found on city Name");
         }
     }
-
+    /*
+     * setNameSorted() method to print person list in sorted order
+     * */
+    public void setNameSorted(){
+        contacts.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(System.out::println);
+    }
+/*
+* personbyState() method to person by particular state
+* */
     public static void personbyState() {
         AddressBookMain obj = new AddressBookMain();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter Name of the City.");
+        System.out.println("Enter Name of the State.");
         String nameState = scanner.next();
         boolean value = false;
-        if (value = obj.stateName.entrySet().stream().anyMatch(name -> name.getKey().equals(nameState))) {
+        if (obj.stateName.entrySet().stream().anyMatch(name -> name.getKey().equals(nameState))) {
             obj.stateName.entrySet().stream().filter(name -> name.getKey().equals(nameState)).forEach(System.out::println);
         } else {
             System.out.println("No Contacts found on city Name");
@@ -139,7 +153,7 @@ class AddressBookMain {
         AddressBookMain obj = new AddressBookMain();
         menu();
         int choice = inp.nextInt();
-        while (choice != 9) {
+        while (choice != 10) {
             if (choice == 1) {
                 System.out.println("Enter Book name : ");
                 String book = inp.next();
@@ -175,6 +189,8 @@ class AddressBookMain {
                 System.out.println("No of times contacts present in State : " + countStatePerson());
             } else if (choice == 8) {
                 System.out.println("No of times contacts present in City : " + countcityPerson());
+            } else if (choice==9){
+                obj.setNameSorted();
             }
 
             menu();
@@ -186,6 +202,11 @@ class AddressBookMain {
         Contact object = new Contact(firstName, lastName, number, city, state, pinCode);
         if (contacts.size() == 0) {
             contacts.put(firstName, object);
+            books.put(book, object);
+            name.put(firstName, object);
+            cityName.put(city,object);
+            stateName.put(state,object);
+
         } else {
             for (int i = 0; i <= contacts.size() + 1; i++) {
                 if (object.equals(contacts.get(i)))             //Using Equal method to find Contact is present in Address book
@@ -195,6 +216,8 @@ class AddressBookMain {
                     contacts.put(firstName, object);
                     books.put(book, object);
                     name.put(firstName, object);
+                    cityName.put(city,object);
+                    stateName.put(state,object);
                 }
             }
         }
