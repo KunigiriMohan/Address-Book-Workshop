@@ -30,7 +30,9 @@ class AddressBookMain {
         System.out.println("Press 7 to view contact count by State");
         System.out.println("Press 8 to view contact count by City");
         System.out.println("Press 9 to view list of contacts in sorted order");
-        System.out.println("Press 10 to Quit");
+        System.out.println("Press 10 to view list of contacts in city sorted order");
+        System.out.println("Press 11 to view list of contacts in state sorted order");
+        System.out.println("Press 12 to Quit");
     }
 
     /*
@@ -144,6 +146,18 @@ class AddressBookMain {
             System.out.println("No Contacts found on city Name");
         }
     }
+    /*
+     * setCitySorted() method to print person list in sorted order
+     * */
+    public void setCitySorted(){
+        cityName.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(System.out::println);
+    }
+    /*
+     * setNameSorted() method to print person list in sorted order
+     * */
+    public void setStateSorted(){
+        stateName.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(System.out::println);
+    }
 
     /*
      * Mian function of class
@@ -153,7 +167,7 @@ class AddressBookMain {
         AddressBookMain obj = new AddressBookMain();
         menu();
         int choice = inp.nextInt();
-        while (choice != 10) {
+        while (choice != 12) {
             if (choice == 1) {
                 System.out.println("Enter Book name : ");
                 String book = inp.next();
@@ -191,6 +205,10 @@ class AddressBookMain {
                 System.out.println("No of times contacts present in City : " + countcityPerson());
             } else if (choice==9){
                 obj.setNameSorted();
+            } else if (choice==10){
+                obj.setCitySorted();
+            } else if (choice == 11) {
+                obj.setStateSorted();
             }
 
             menu();
