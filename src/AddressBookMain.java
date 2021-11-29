@@ -5,8 +5,8 @@ class AddressBookMain {
     Map<String, Contact> contacts = new LinkedHashMap<>();
     Map<String, Contact> books = new LinkedHashMap<>();
     Map<String, Contact> name = new LinkedHashMap<>();
-    Map<String, Contact> cityName = new LinkedHashMap<>();
-    Map<String, Contact> stateName = new LinkedHashMap<>();
+    Map<Contact,String> cityName = new LinkedHashMap<>();
+    Map<Contact,String> stateName = new LinkedHashMap<>();
 
 
     /*
@@ -21,6 +21,20 @@ class AddressBookMain {
         return stateName.entrySet().stream().anyMatch(name -> name.getKey().equals(nameState));
     }
     /*
+     * countStatePerson() method to count person present particular state and return value
+     * */
+    public long countStatePerson(String nameState) {
+
+        return stateName.entrySet().stream().filter(name -> name.getValue().equals(nameState)).count();
+    }
+
+    /*
+     * countCityPerson() method to count person present particular city and return value
+     * */
+    public long countcityPerson(String nameCity) {
+        return cityName.entrySet().stream().filter(name -> name.getValue().equals(nameCity)).count();
+    }
+    /*
     * add() method to add contacts to Addressbook
     * */
     public void add(String book, String firstName, String lastName, String number, String city, String state, String pinCode) {
@@ -29,8 +43,8 @@ class AddressBookMain {
             contacts.put(firstName,object);
             books.put(book, object);
             name.put(firstName, object);
-            stateName.put(state,object);
-            cityName.put(city,object);
+            stateName.put(object,state);
+            cityName.put(object,city);
 
         } else {
             for (int i = 0; i <= contacts.size() + 1; i++) {
@@ -41,8 +55,8 @@ class AddressBookMain {
                     contacts.put(firstName,object);
                     books.put(book, object);
                     name.put(firstName, object);
-                    stateName.put(state,object);
-                    cityName.put(city,object);
+                    stateName.put(object,state);
+                    cityName.put(object,city);
                 }
             }
         }
